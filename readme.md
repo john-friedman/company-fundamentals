@@ -4,7 +4,7 @@ A minimal python package to construct company fundamentals such as EPS, P/E, EBI
 
 ## Installation
 ```
-pip install company-fundamentals
+pip install companyfundamentals
 ```
 
 ## Usage
