@@ -4,7 +4,7 @@ with open("readme.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="company-fundamentals",
+    name="company_fundamentals",
     version="0.0.2",
     description="A package to standardize XBRL into fundamentals data",
     packages=find_packages(),
