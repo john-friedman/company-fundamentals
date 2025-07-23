@@ -8,7 +8,7 @@ pip install company-fundamentals
 ```
 
 ## Usage
-Takes dictionaries with taxonomy and concept, then standardizes and calculates fundamental values.
+Takes dictionaries with taxonomy and concept, then standardizes and calculates fundamental values. Powers the [datamule](https://github.com/john-friedman/datamule-python) project.
 ```
 
 sample_simple_xbrl = [
