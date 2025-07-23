@@ -1,6 +1,6 @@
 # Company Fundamentals
 
-A minimal python package to construct company fundamentals such as EPS, P/E, EBITDA, Gross Margin and more.
+A minimal python package to construct company fundamentals such as EPS, P/E, EBITDA, Gross Margin and more. 
 
 ## Installation
 ```
