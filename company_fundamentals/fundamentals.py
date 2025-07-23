@@ -1,5 +1,5 @@
-from mappings.mappings import mappings
-from calculations.calculations import calculations
+from .mappings.mappings import mappings
+from .calculations.calculations import calculations
 import re
 from datetime import datetime, timedelta
 
@@ -8,6 +8,12 @@ VAR_PATTERN = re.compile(r'\b[a-zA-Z_][a-zA-Z0-9_]*\b(?!\s*\[)')
 
 def extract_parameters(formula):
     return list(set(VAR_PATTERN.findall(formula)))
+
+def safe_float(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return None
 
 
 def evaluate_lagged_formula_by_periods(formula, parameters, concepts, start_date_key, end_date_key, lag_tolerance_days=30):
@@ -116,7 +122,11 @@ def evaluate_formula_by_periods(formula, parameters, concepts, start_date_key, e
     
     # Evaluate for each period
     for date_key, period_concepts in date_groups.items():
-        concept_values = {c['standardized_concept_name']: float(c['value']) for c in period_concepts}
+        concept_values = {
+            c['standardized_concept_name']: safe_float(c['value']) 
+            for c in period_concepts 
+            if safe_float(c['value']) is not None
+        }
         
         if all(param in concept_values for param in parameters):
             # Simple string replacement (safer than eval)

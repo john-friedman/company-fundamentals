@@ -5,7 +5,7 @@ with open("readme.md", "r", encoding="utf-8") as f:
 
 setup(
     name="company_fundamentals",
-    version="0.0.3",
+    version="0.0.4",
     description="A package to standardize XBRL into fundamentals data",
     packages=find_packages(),
     long_description=long_description,
