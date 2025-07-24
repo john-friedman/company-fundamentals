@@ -16,7 +16,7 @@ sample_simple_xbrl = [
 {'taxonomy': 'us-gaap', 'name': 'NetIncomeLoss', 'value': '100000', 'period_start_date': '2023-01-01', 'period_end_date': '2023-12-31'},
 ]
 
-fundamentals = construct_fundamentals(data=sample_simple_xbrl, taxonomy_key='taxonomy', concept_key='name, start_date_key='period_start_date', end_date_key='period_end_date', categories=None)
+fundamentals = construct_fundamentals(data=sample_simple_xbrl, taxonomy_key='taxonomy', concept_key='name, start_date_key='period_start_date', end_date_key='period_end_date', categories=None,fundamentals=None)
 print(fundamentals)
 ```
 
@@ -28,6 +28,11 @@ Returns a dictionary of fundamentals
 Use categories to subset what fundamentals you would like to construct
 ```
 fundamentals = construct_fundamentals(data=sample_simple_xbrl, taxonomy_key='taxonomy', concept_key='name, start_date_key='period_start_date', end_date_key='period_end_date', categories=['incomeStatement'])
+```
+
+Subset by fundamental
+```
+fundamentals = construct_fundamentals(data=sample_simple_xbrl, taxonomy_key='taxonomy', concept_key='name, start_date_key='period_start_date', end_date_key='period_end_date', fundamentals=['freeCashFlow'])
 ```
 
 ## Package Design

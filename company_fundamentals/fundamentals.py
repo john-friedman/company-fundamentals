@@ -148,19 +148,27 @@ def evaluate_formula_by_periods(formula, parameters, concepts, start_date_key, e
 
 
 
-# yeah so we should go calc by calc,
-def calculate_fundamentals(standardized_concepts, categories, start_date_key, end_date_key):
+def calculate_fundamentals(standardized_concepts, categories, fundamentals, start_date_key, end_date_key):
+    # Ensure only one filtering method is used
+    if categories is not None and fundamentals is not None:
+        raise ValueError("Only one of 'categories' or 'fundamentals' can be specified, not both")
+    
     fundamentals_dict = {}
     category_dict = {}
 
     for category in calculations.keys():
-        # if categories is None, it means all.
+        # Filter by categories if specified
         if categories is not None:
             if category not in categories:
                 continue
 
         if 'selected' in calculations[category].keys():
             for indicator in calculations[category]['selected']:
+                # Filter by fundamentals if specified
+                if fundamentals is not None:
+                    if indicator not in fundamentals:
+                        continue
+                        
                 matches = [
                     {k: v for k, v in item.items() if k != 'standardized_concept_name'}
                     for item in standardized_concepts 
@@ -173,6 +181,11 @@ def calculate_fundamentals(standardized_concepts, categories, start_date_key, en
 
         if 'calculations' in calculations[category].keys():
             for indicator in calculations[category]['calculations']:
+                # Filter by fundamentals if specified
+                if fundamentals is not None:
+                    if indicator not in fundamentals:
+                        continue
+                        
                 formula = calculations[category]['calculations'][indicator]
                 
                 # Extract parameters and concepts FIRST
@@ -199,7 +212,7 @@ def calculate_fundamentals(standardized_concepts, categories, start_date_key, en
 
 
 
-def construct_fundamentals(data, taxonomy_key, concept_key, start_date_key, end_date_key, categories=None):
+def construct_fundamentals(data, taxonomy_key, concept_key, start_date_key, end_date_key, categories=None, fundamentals=None):
     standardized_concepts = []
     for concept in data:
         mapping_key = (concept[taxonomy_key], concept[concept_key])
@@ -211,14 +224,5 @@ def construct_fundamentals(data, taxonomy_key, concept_key, start_date_key, end_
             standardized_concepts.append(new_concept)
 
 
-    fundamentals = calculate_fundamentals(standardized_concepts, categories, start_date_key, end_date_key)
-    return fundamentals
-
-
-# test_lagged = [
-#     {'taxonomy': 'us-gaap', 'name': 'NetIncomeLoss', 'value': '120000', 'period_start_date': '2024-01-01', 'period_end_date': '2024-12-31'},
-#     {'taxonomy': 'us-gaap', 'name': 'NetIncomeLoss', 'value': '100000', 'period_start_date': '2023-01-01', 'period_end_date': '2023-12-31'},
-# ]
-
-# results = construct_fundamentals(test_lagged, 'taxonomy', 'name', 'period_start_date', 'period_end_date')
-# print(results)
+    fundamentals_result = calculate_fundamentals(standardized_concepts, categories, fundamentals, start_date_key, end_date_key)
+    return fundamentals_result
