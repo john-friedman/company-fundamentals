@@ -1,6 +1,8 @@
 # Company Fundamentals
 
-A minimal python package to construct company fundamentals such as EPS, P/E, EBITDA, Gross Margin and more.  
+A minimal python package to construct company fundamentals such as EPS, P/E, EBITDA, Gross Margin and more.  Powers the [datamule](https://github.com/john-friedman/datamule-python) project.
+
+Note: [finqual](https://github.com/harryy-he/finqual) may be a better solution for you.
 
 ## Installation
 ```
@@ -8,7 +10,7 @@ pip install companyfundamentals
 ```
 
 ## Usage
-Takes dictionaries with taxonomy and concept, then standardizes and calculates fundamental values. Powers the [datamule](https://github.com/john-friedman/datamule-python) project.
+Takes dictionaries with taxonomy and concept, then standardizes and calculates fundamental values. 
 ```
 
 sample_simple_xbrl = [
