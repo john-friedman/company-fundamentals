@@ -149,6 +149,7 @@ def evaluate_formula_by_periods(formula, parameters, concepts, start_date_key, e
 
 
 def calculate_fundamentals(standardized_concepts, categories, fundamentals, start_date_key, end_date_key):
+    print(start_date_key)
     # Ensure only one filtering method is used
     if categories is not None and fundamentals is not None:
         raise ValueError("Only one of 'categories' or 'fundamentals' can be specified, not both")
@@ -215,12 +216,17 @@ def calculate_fundamentals(standardized_concepts, categories, fundamentals, star
 def construct_fundamentals(data, taxonomy_key, concept_key, start_date_key, end_date_key, categories=None, fundamentals=None):
     standardized_concepts = []
     for concept in data:
+        if concept.get('context',None) is not None:
+            context = concept.pop('context')
+
         mapping_key = (concept[taxonomy_key], concept[concept_key])
         if mapping_key in mappings:
             standardized_concept_name = mappings[mapping_key]
             # Create a new dict excluding taxonomy_key and concept_key
             new_concept = {k: v for k, v in concept.items() if k not in [taxonomy_key, concept_key]}
             new_concept['standardized_concept_name'] = standardized_concept_name
+            if 'entity_segment_explicitmember' in context:
+                new_concept['segments'] = context['entity_segment_explicitmember']
             standardized_concepts.append(new_concept)
 
 
